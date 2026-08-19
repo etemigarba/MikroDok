@@ -161,7 +161,7 @@ jobs:
           pip-audit -r requirements.txt --desc --format=json --output=audit-report.json
 
       - name: Upload audit report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: security-audit
           path: audit-report.json
@@ -200,7 +200,7 @@ jobs:
           twine check dist/*
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: build-artifacts
           path: dist/*
@@ -229,7 +229,7 @@ jobs:
           sphinx-build -b html -W --keep-going . _build/html
 
       - name: Upload documentation
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: documentation
           path: docs/_build/html
