@@ -1,0 +1,72 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    labels:
+      - "dependencies"
+      - "pip"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    groups:
+      ml-framework:
+        patterns:
+          - "torch*"
+          - "transformers*"
+          - "deepspeed*"
+          - "onnxruntime*"
+      ml-utils:
+        patterns:
+          - "chromadb*"
+          - "sentence-transformers*"
+          - "bitsandbytes*"
+          - "langchain*"
+      doc-processing:
+        patterns:
+          - "pdfplumber*"
+          - "python-docx*"
+          - "beautifulsoup4*"
+          - "pytesseract*"
+      dev-tools:
+        patterns:
+          - "pytest*"
+          - "ruff*"
+          - "mypy*"
+          - "pre-commit*"
+          - "black*"
+          - "isort*"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "etemigarba"
+    assignees:
+      - "etemigarba"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      - dependency-name: "torch"
+        versions: ["2.0.*", "2.1.0"]  # Wait for 2.2+ stability
+      - dependency-name: "deepspeed"
+        versions: ["0.11.*"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    reviewers:
+      - "etemigarba"
+    open-pull-requests-limit: 5

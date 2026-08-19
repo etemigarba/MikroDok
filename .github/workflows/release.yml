@@ -1,0 +1,303 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 0.1.0)'
+        required: true
+        type: string
+      prerelease:
+        description: 'Mark as pre-release'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  PYTHON_VERSION: '3.12'
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  validate:
+    name: Validate Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      version: ${{ steps.extract-version.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version
+        id: extract-version
+        run: |
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          else
+            VERSION=${{ github.event.inputs.version }}
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Releasing version: $VERSION"
+
+      - name: Validate version format
+        run: |
+          VERSION="${{ steps.extract-version.outputs.version }}"
+          if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?$ ]]; then
+            echo "Invalid version format: $VERSION"
+            exit 1
+          fi
+
+      - name: Check version in pyproject.toml
+        run: |
+          VERSION="${{ steps.extract-version.outputs.version }}"
+          TOML_VERSION=$(grep '^version = ' pyproject.toml | sed 's/version = "\(.*\)"/\1/')
+          if [[ "$VERSION" != "$TOML_VERSION" ]]; then
+            echo "Version mismatch: tag=$VERSION, pyproject.toml=$TOML_VERSION"
+            exit 1
+          fi
+
+      - name: Verify CHANGELOG has entry
+        run: |
+          VERSION="${{ steps.extract-version.outputs.version }}"
+          if ! grep -q "## \[$VERSION\]" CHANGELOG.md; then
+            echo "CHANGELOG.md missing entry for version $VERSION"
+            exit 1
+          fi
+
+  build-windows:
+    name: Build Windows
+    runs-on: windows-latest
+    needs: validate
+    timeout-minutes: 60
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flet-build pyinstaller
+
+      - name: Build MSI installer
+        run: |
+          flet build windows `
+            --project-name MikroDok `
+            --bundle-id com.etemigarba.mikrodok `
+            --version ${{ needs.validate.outputs.version }} `
+            --code-sign `
+            --installer-type msi
+
+      - name: Build portable zip
+        run: |
+          flet build windows `
+            --project-name MikroDok `
+            --bundle-id com.etemigarba.mikrodok `
+            --version ${{ needs.validate.outputs.version }} `
+            --format zip
+
+      - name: Generate checksums
+        run: |
+          $files = Get-ChildItem dist/*.msi, dist/*.zip
+          foreach ($file in $files) {
+            $hash = Get-FileHash -Algorithm SHA256 $file.FullName
+            "$($hash.Hash)  $($file.Name)" | Out-File -FilePath dist/SHA256SUMS -Encoding utf8 -Append
+          }
+
+      - name: Sign checksums
+        if: env.GPG_PRIVATE_KEY != ''
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import
+          gpg --clearsign --output dist/SHA256SUMS.asc dist/SHA256SUMS
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-artifacts
+          path: dist/*.msi, dist/*.zip, dist/SHA256SUMS*
+
+  build-macos:
+    name: Build macOS
+    runs-on: macos-latest
+    needs: validate
+    timeout-minutes: 60
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flet-build
+          brew install create-dmg
+
+      - name: Build DMG
+        run: |
+          flet build macos `
+            --project-name MikroDok `
+            --bundle-id com.etemigarba.mikrodok `
+            --version ${{ needs.validate.outputs.version }} `
+            --code-sign `
+            --notarize
+
+      - name: Generate checksums
+        run: |
+          cd dist
+          shasum -a 256 *.dmg > SHA256SUMS
+          gpg --clearsign --output SHA256SUMS.asc SHA256SUMS
+
+      - name: Upload macOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-artifacts
+          path: dist/*.dmg, dist/SHA256SUMS*
+
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-latest
+    needs: validate
+    timeout-minutes: 60
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            patchelf \
+            appimagetool \
+            libfuse2 \
+            desktop-file-utils
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flet-build
+
+      - name: Build AppImage
+        run: |
+          flet build linux `
+            --project-name MikroDok `
+            --bundle-id com.etemigarba.mikrodok `
+            --version ${{ needs.validate.outputs.version }} `
+            --format AppImage
+
+      - name: Generate checksums
+        run: |
+          cd dist
+          sha256sum *.AppImage > SHA256SUMS
+          gpg --clearsign --output SHA256SUMS.asc SHA256SUMS
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-artifacts
+          path: dist/*.AppImage, dist/SHA256SUMS*
+
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: [validate, build-windows, build-macos, build-linux]
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Organize artifacts
+        run: |
+          mkdir -p release
+          mv artifacts/* release/
+          ls -la release/
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.validate.outputs.version }}
+          name: MikroDok v${{ needs.validate.outputs.version }}
+          body_path: RELEASE_NOTES.md
+          draft: false
+          prerelease: ${{ github.event.inputs.prerelease || false }}
+          files: |
+            release/*.msi
+            release/*.zip
+            release/*.dmg
+            release/*.AppImage
+            release/SHA256SUMS
+            release/SHA256SUMS.asc
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-docs:
+    name: Publish Documentation
+    runs-on: ubuntu-latest
+    needs: create-release
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install docs dependencies
+        run: |
+          pip install sphinx sphinx-rtd-theme myst-parser sphinx-autodoc-typehints
+
+      - name: Build documentation
+        run: |
+          cd docs
+          sphinx-build -b html -W --keep-going . _build/html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_build/html
+          force_orphan: true
+
+  notify-success:
+    name: Notify Success
+    runs-on: ubuntu-latest
+    needs: [create-release, publish-docs]
+    if: success()
+    steps:
+      - name: Send success notification
+        run: |
+          echo "Release v${{ needs.validate.outputs.version }} published successfully!"
+          echo "GitHub Release: https://github.com/${{ github.repository }}/releases/tag/v${{ needs.validate.outputs.version }}"
+        # Add Slack/Discord/Email notification here

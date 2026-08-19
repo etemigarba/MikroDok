@@ -1,0 +1,147 @@
+{
+  "src/modules/ui/resource_dashboard_ui/monitoring_dashboard_ui/monitoring_dashboard_ui.py": {
+    "exists": true,
+    "syntax_valid": true,
+    "responsive_patterns": {
+      "get_responsive_layout\\(\\)": 8,
+      "create_responsive_grid\\(": 3,
+      "get_breakpoint_value\\(": 18,
+      "ResponsiveLayoutManager": 2,
+      "ThemeAwareUserControl": 2
+    },
+    "deprecated_patterns": {
+      "ft\\.ResponsiveRow\\(": 0,
+      "col=\\{": 0,
+      "hardcoded.*width.*=.*\\d+": 0,
+      "hardcoded.*height.*=.*\\d+": 0,
+      "ft\\.Colors\\.[A-Z_]+": 0,
+      "fixed.*size.*=.*\\d+": 0
+    },
+    "responsiveness_percentage": 100.0,
+    "theme_integration": {
+      "inherits_theme_aware": true,
+      "uses_get_palette": true,
+      "uses_get_spacing": true,
+      "uses_get_text_style": true,
+      "uses_get_icon": true,
+      "no_hardcoded_colors": true
+    },
+    "lines_of_code": 929
+  },
+  "src/modules/ui/resource_dashboard_ui/gpu_utilization_chart_ui/gpu_utilization_chart_ui.py": {
+    "exists": true,
+    "syntax_valid": true,
+    "responsive_patterns": {
+      "get_responsive_layout\\(\\)": 11,
+      "create_responsive_grid\\(": 2,
+      "get_breakpoint_value\\(": 19,
+      "ResponsiveLayoutManager": 2,
+      "ThemeAwareUserControl": 2
+    },
+    "deprecated_patterns": {
+      "ft\\.ResponsiveRow\\(": 0,
+      "col=\\{": 0,
+      "hardcoded.*width.*=.*\\d+": 0,
+      "hardcoded.*height.*=.*\\d+": 0,
+      "ft\\.Colors\\.[A-Z_]+": 0,
+      "fixed.*size.*=.*\\d+": 0
+    },
+    "responsiveness_percentage": 100.0,
+    "theme_integration": {
+      "inherits_theme_aware": true,
+      "uses_get_palette": true,
+      "uses_get_spacing": true,
+      "uses_get_text_style": true,
+      "uses_get_icon": true,
+      "no_hardcoded_colors": true
+    },
+    "lines_of_code": 1037
+  },
+  "src/modules/ui/resource_dashboard_ui/memory_usage_chart_ui/memory_usage_chart_ui.py": {
+    "exists": true,
+    "syntax_valid": true,
+    "responsive_patterns": {
+      "get_responsive_layout\\(\\)": 41,
+      "create_responsive_grid\\(": 1,
+      "get_breakpoint_value\\(": 40,
+      "ResponsiveLayoutManager": 1,
+      "ThemeAwareUserControl": 2
+    },
+    "deprecated_patterns": {
+      "ft\\.ResponsiveRow\\(": 1,
+      "col=\\{": 2,
+      "hardcoded.*width.*=.*\\d+": 0,
+      "hardcoded.*height.*=.*\\d+": 0,
+      "ft\\.Colors\\.[A-Z_]+": 0,
+      "fixed.*size.*=.*\\d+": 0
+    },
+    "responsiveness_percentage": 100.0,
+    "theme_integration": {
+      "inherits_theme_aware": true,
+      "uses_get_palette": true,
+      "uses_get_spacing": true,
+      "uses_get_text_style": true,
+      "uses_get_icon": true,
+      "no_hardcoded_colors": true
+    },
+    "lines_of_code": 1122
+  },
+  "src/modules/ui/resource_dashboard_ui/performance_gauge_ui/performance_gauge_ui.py": {
+    "exists": true,
+    "syntax_valid": true,
+    "responsive_patterns": {
+      "get_responsive_layout\\(\\)": 3,
+      "create_responsive_grid\\(": 0,
+      "get_breakpoint_value\\(": 7,
+      "ResponsiveLayoutManager": 0,
+      "ThemeAwareUserControl": 2
+    },
+    "deprecated_patterns": {
+      "ft\\.ResponsiveRow\\(": 0,
+      "col=\\{": 0,
+      "hardcoded.*width.*=.*\\d+": 0,
+      "hardcoded.*height.*=.*\\d+": 0,
+      "ft\\.Colors\\.[A-Z_]+": 0,
+      "fixed.*size.*=.*\\d+": 0
+    },
+    "responsiveness_percentage": 60.0,
+    "theme_integration": {
+      "inherits_theme_aware": true,
+      "uses_get_palette": true,
+      "uses_get_spacing": true,
+      "uses_get_text_style": true,
+      "uses_get_icon": true,
+      "no_hardcoded_colors": true
+    },
+    "lines_of_code": 711
+  },
+  "src/modules/ui/resource_dashboard_ui/alert_panel_ui/alert_panel_ui.py": {
+    "exists": true,
+    "syntax_valid": true,
+    "responsive_patterns": {
+      "get_responsive_layout\\(\\)": 2,
+      "create_responsive_grid\\(": 1,
+      "get_breakpoint_value\\(": 3,
+      "ResponsiveLayoutManager": 2,
+      "ThemeAwareUserControl": 2
+    },
+    "deprecated_patterns": {
+      "ft\\.ResponsiveRow\\(": 0,
+      "col=\\{": 0,
+      "hardcoded.*width.*=.*\\d+": 0,
+      "hardcoded.*height.*=.*\\d+": 0,
+      "ft\\.Colors\\.[A-Z_]+": 0,
+      "fixed.*size.*=.*\\d+": 0
+    },
+    "responsiveness_percentage": 100.0,
+    "theme_integration": {
+      "inherits_theme_aware": true,
+      "uses_get_palette": true,
+      "uses_get_spacing": true,
+      "uses_get_text_style": true,
+      "uses_get_icon": true,
+      "no_hardcoded_colors": true
+    },
+    "lines_of_code": 746
+  }
+}

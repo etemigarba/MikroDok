@@ -1,0 +1,41 @@
+
+Core System UI Modules Refactoring Verification Report
+=====================================================
+
+Summary:
+--------
+Total Modules Verified: 5
+Modules Passed: 3
+Modules Failed: 2
+Average Responsiveness Score: 89.2%
+
+Overall Status: ❌ SOME MODULES NEED ATTENTION
+
+Detailed Results:
+----------------
+
+theme_system_ui: FAIL (88.0% responsive)
+  Issues:
+    - Hardcoded styling found: #00FF00, #1976d2, #718096, #4A5568, #4caf50, #CCCCCC, #666666, #333333, #44AAFF, #FFEBEE, #1A1A1A, #38A169, #330000, #2C5282, #ff9800, #004499, #3388CC, #1A202C, #BEE3F8, #EDF2F7, #2D2D2D, #4D1A1A, #FFA500, #E8E8E8, #F5F5F5, #008800, #00FFFF, #f5f5f5, #D0D0D0, #5D5D5D, #FFFF00, #E53E3E, #3182CE, #CC0000, #0066CC, #1A365D, #EBF8FF, #888888, #C0C0C0, #FF8C00, #B8B8B8, #f44336, #F7FAFC, #FF0000, #FF4444, #44FF44, #999999, #0D0D0D, #D69E2E
+    - Hardcoded styling found: #888, #EBF, #1A1, #38A, #333, #4ca, #00F, #F7F, #0D0, #197, #004, #2D2, #5D5, #BEE, #FFF, #44A, #718, #FFE, #1A2, #D0D, #C0C, #318, #330, #CCC, #338, #1A3, #FF4, #CC0, #D69, #FF0, #EDF, #008, #44F, #f44, #F5F, #B8B, #ff9, #E53, #000, #4D1, #FFA, #FF8, #2C5, #f5f, #006, #4A5, #666, #E8E, #999
+    - Hardcoded styling found: rgba(
+  Improvements:
+    - Could benefit from more responsive design patterns
+
+animation_ui: PASS (100.0% responsive)
+
+color_palette_ui: FAIL (75.0% responsive)
+  Issues:
+    - Hardcoded styling found: rgb(
+  Improvements:
+    - Consider using: get_responsive_layout
+    - Could benefit from more responsive design patterns
+
+spacing_system_ui: PASS (89.0% responsive)
+  Improvements:
+    - Consider using: get_responsive_layout, get_breakpoint_value
+    - Could benefit from more responsive design patterns
+
+typography_ui: PASS (94.0% responsive)
+  Improvements:
+    - Consider using: get_responsive_layout, get_breakpoint_value

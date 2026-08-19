@@ -1,0 +1,82 @@
+MikroDok - Document Language Model Builder
+Copyright © 2025 Etemi Joshua Garba. All rights reserved.
+
+PROPRIETARY LICENSE AGREEMENT
+
+This software and associated documentation files (the "Software") are the exclusive 
+property of Etemi Joshua Garba ("Copyright Holder"). The Software is protected by 
+copyright laws and international copyright treaties, as well as other intellectual 
+property laws and treaties.
+
+PERMISSION REQUIREMENTS
+
+Explicit written permission from the Copyright Holder is REQUIRED for any of the 
+following activities:
+
+1. ADOPTION OR USE - Using the Software in any form, including but not limited to:
+   - Running, executing, or operating the Software
+   - Incorporating the Software into other applications or systems
+   - Using the Software for research, development, or commercial purposes
+
+2. EDITING, MODIFICATION, OR REFACTORING - Any changes to the Software including:
+   - Modifying source code, algorithms, or logic
+   - Refactoring, restructuring, or reorganizing code
+   - Creating derivative works based on the Software
+   - Adapting the Software for different platforms or environments
+
+3. DISTRIBUTION - Sharing the Software in any form including:
+   - Copying, reproducing, or duplicating the Software
+   - Publishing, posting, or making the Software available to others
+   - Sublicensing, renting, leasing, or lending the Software
+   - Including the Software in distributions or packages
+
+4. COMMERCIAL USE - Any revenue-generating activity involving the Software:
+   - Selling, reselling, or licensing the Software
+   - Using the Software in commercial products or services
+   - Offering Software-as-a-Service based on the Software
+
+PERMITTED ACTIVITIES (Without Explicit Permission)
+
+The following activities are permitted WITHOUT explicit permission:
+
+1. VIEWING - Reading and examining the publicly available source code on GitHub
+2. FORKING - Creating a personal fork on GitHub for examination purposes only
+3. ISSUE REPORTING - Reporting bugs, suggesting features, or asking questions via GitHub Issues
+4. ACADEMIC CITATION - Citing the Software in academic publications with proper attribution
+
+ATTRIBUTION REQUIREMENTS
+
+Any permitted use of the Software must include the following attribution:
+"MikroDok - Document Language Model Builder, Copyright © 2025 Etemi Joshua Garba"
+
+NO WARRANTY
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE 
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE 
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+TERMINATION
+
+This license terminates automatically upon any violation of its terms. Upon 
+termination, you must immediately cease all use of the Software and destroy all 
+copies in your possession.
+
+GOVERNING LAW
+
+This license shall be governed by and construed in accordance with applicable 
+intellectual property laws. Any disputes arising from this license shall be 
+resolved in the appropriate jurisdiction.
+
+CONTACT FOR PERMISSIONS
+
+For permission requests, licensing inquiries, or commercial partnerships, contact:
+Etemi Joshua Garba
+GitHub: https://github.com/etemigarba
+Repository: https://github.com/etemigarba/MikroDok
+
+VERSION HISTORY
+
+v1.0 - 2025-01-15 - Initial license version
