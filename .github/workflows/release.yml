@@ -123,7 +123,7 @@ jobs:
           gpg --clearsign --output dist/SHA256SUMS.asc dist/SHA256SUMS
 
       - name: Upload Windows artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: windows-artifacts
           path: dist/*.msi, dist/*.zip, dist/SHA256SUMS*
@@ -166,7 +166,7 @@ jobs:
           gpg --clearsign --output SHA256SUMS.asc SHA256SUMS
 
       - name: Upload macOS artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: macos-artifacts
           path: dist/*.dmg, dist/SHA256SUMS*
@@ -216,7 +216,7 @@ jobs:
           gpg --clearsign --output SHA256SUMS.asc SHA256SUMS
 
       - name: Upload Linux artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: linux-artifacts
           path: dist/*.AppImage, dist/SHA256SUMS*
