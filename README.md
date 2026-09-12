@@ -9,7 +9,7 @@
 
 ---
 
-**MikroDok "Document Language Model Builder"** — An offline-first desktop application that democratizes Large Language Model development by transforming documents into custom 1–7B parameter models using innovative **Intelligent Dynamic Resource Allocation (IDRAlloc)** memory bridging across GPU VRAM, System RAM, and NVMe storage.
+**MikroDok "Document Language Model Builder"** — An offline-first desktop application that democratizes Large Language Model development by transforming documents into custom 1–7B parameter models using innovative **Intelligent Dynamic Resource Allocation (IDRAlloc)** memory bridging across GPU VRAM, System RAM, and NVMe storage. MikroDoc is based on oflline-local Retrieval Augmented Generation (RAG) pipeline.
 
 ## 🏗️ Architecture Overview
 
